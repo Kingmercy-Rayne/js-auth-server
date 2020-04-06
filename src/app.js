@@ -1,10 +1,12 @@
 const express = require('express');
-
 const volleyball = require('volleyball');
 
 const auth = require('./auth');
 
 const port = 1337;
+
+require('dotenv').config();
+
 const app = express();
 
 app.use(volleyball);
