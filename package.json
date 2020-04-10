@@ -21,6 +21,7 @@
     "monk": "^7.1.2"
   },
   "devDependencies": {
+    "cors": "^2.8.5",
     "nodemon": "^2.0.2",
     "volleyball": "^1.5.1"
   },

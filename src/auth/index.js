@@ -9,9 +9,7 @@ const users = db.get('users');
 
 const registerSchema = Joi.object().keys({
   firstName: Joi.string().alphanum().min(3).max(30).required(),
-  lastName: Joi.string().alphanum().min(3).max(30).required(),
   username: Joi.string().alphanum().min(3).max(30).required(),
-  userClass: Joi.string().alphanum().min(3).max(30).required(),
   password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
   email: Joi.string().email({ minDomainSegments: 2 }),
 });
@@ -38,9 +36,7 @@ router.post('/register', (req, res, next) => {
             .then((hashedPassword) => {
               const newUser = {
                 firstName: req.body.firstName,
-                lastName: req.body.lastName,
                 username: req.body.username,
-                userClass: req.body.userClass,
                 email: req.body.email,
                 password: hashedPassword,
               };
@@ -49,7 +45,7 @@ router.post('/register', (req, res, next) => {
                 .then((addedUser) => {
                   delete addedUser.password;
                   jwt.sign(
-                    addedUser,
+                    { _id: addedUser._id },
                     process.env.TOKEN_SECRET,
                     { expiresIn: '1d' },
                     (err, token) => {
