@@ -14,11 +14,11 @@ const registerSchema = Joi.object().keys({
   email: Joi.string().email({ minDomainSegments: 2 }),
 });
 
-router.get('/register', (req, res, next) => {
-  res.send('Welcome to the Register route');
+router.get('/signup', (req, res, next) => {
+  res.send('Welcome to the Signup route');
 });
 
-router.post('/register', (req, res, next) => {
+router.post('/signup', (req, res, next) => {
   const result = registerSchema.validate(req.body);
   if (!result.error) {
     users
@@ -29,6 +29,7 @@ router.post('/register', (req, res, next) => {
         if (user !== null) {
           console.log('Username already exists');
           const error = new Error('Username already exists');
+          res.json('User exists already');
           next(error);
         } else {
           bcrypt
@@ -69,6 +70,9 @@ router.post('/register', (req, res, next) => {
 
 router.get('/login', (req, res) => {
   res.send('Yo! This is the login route');
+});
+router.post('/login', (req, res) => {
+  res.json(req.body);
 });
 
 module.exports = router;
